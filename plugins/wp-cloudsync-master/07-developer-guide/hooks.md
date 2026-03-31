@@ -120,12 +120,67 @@ All hooks are prefixed with `wp-cloudsync-master_` to avoid conflicts with other
     *   **Arguments**: `string $filePath`
     *   **Description**: Fires when an object link tracking record is deleted from the repository.
 
+### Extra File Sources (PRO)
+
+These hooks allow integrations to provide additional non-attachment files for the Fill Upload Queue process. Used by the BuddyBoss/BuddyPress integration to discover avatars and cover images.
+
+*   `csm_pro_extra_file_sources`
+    *   **Type**: Filter
+    *   **Arguments**: `array $sources`
+    *   **Description**: Register additional file sources for the Fill Upload Queue. Each source is a callable that receives pagination parameters and returns a batch of file paths. The Fill Upload Queue task iterates through all registered sources after processing standard WordPress attachments.
+    *   **Example**:
+        ```php
+        add_filter('csm_pro_extra_file_sources', function(array $sources): array {
+            $sources['my_plugin'] = function(int $offset, int $batchSize): array {
+                // Discover files in batches using directory-level pagination
+                $directories = glob('/path/to/custom/uploads/[0-9]*', GLOB_ONLYDIR);
+                sort($directories);
+                $batch = array_slice($directories, $offset, $batchSize);
+
+                $files = [];
+                foreach ($batch as $dir) {
+                    foreach (glob($dir . '/*.{jpg,png,gif,webp}', GLOB_BRACE) as $file) {
+                        $files[] = $file;
+                    }
+                }
+
+                return [
+                    'files' => $files,     // Absolute file paths
+                    'total' => count($directories),  // Total directories (for pagination)
+                ];
+            };
+            return $sources;
+        });
+        ```
+    *   **Notes**:
+        - The `$offset` and `$batchSize` parameters refer to **directories**, not individual files. This enables efficient resume for large sites.
+        - Return absolute file paths in the `files` array.
+        - The `total` count should reflect the total number of directories, not files.
+        - Once all directories are processed, the source is marked complete and won't re-scan until invalidated.
+
+*   `csm_pro_before_extra_file_sources`
+    *   **Type**: Action
+    *   **Arguments**: `string $cronTaskId`
+    *   **Description**: Fires before the Fill Upload Queue checks extra file source completion status. Integrations use this to consume invalidation flags and reset per-source progress, forcing a re-scan when new files have been added.
+    *   **Example**:
+        ```php
+        add_action('csm_pro_before_extra_file_sources', function(string $cronTaskId): void {
+            if (!get_option('my_plugin_scan_invalidated', false)) {
+                return;
+            }
+            // Reset progress so the next Fill Queue cycle re-scans
+            delete_option($cronTaskId . '_extra_my_plugin_complete');
+            delete_option($cronTaskId . '_extra_my_plugin_offset');
+            delete_option('my_plugin_scan_invalidated');
+        });
+        ```
+
 ### WP-CLI Events
 
 *   `wp-cloudsync-master_cli_before_sync`
-    *   **Arguments**: `\OneTeamSoftware\WP\CloudSyncMaster\Provider\Account\ProviderAccountInterface[] $accounts`, `int $batchSize`
-    *   **Description**: Fires before the `wp cloudsync sync` command starts scanning the media library.
+    *   **Arguments**: `array $accounts`, `int $batchSize`
+    *   **Description**: Fires before the `wp cloudsync sync` command starts scanning the media library. `$accounts` is an array of provider account objects.
 
 *   `wp-cloudsync-master_cli_after_sync`
-    *   **Arguments**: `\OneTeamSoftware\WP\CloudSyncMaster\Provider\Account\ProviderAccountInterface[] $accounts`, `int $totalQueued`
-    *   **Description**: Fires after the `wp cloudsync sync` command completes scanning the media library.
+    *   **Arguments**: `array $accounts`, `int $totalQueued`
+    *   **Description**: Fires after the `wp cloudsync sync` command completes scanning the media library. `$accounts` is an array of provider account objects.

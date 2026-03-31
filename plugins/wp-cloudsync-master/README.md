@@ -12,6 +12,7 @@ Lower your hosting costs, improve Core Web Vitals, and stop worrying about disk 
 * **Free bulk migration:** The free version includes tools to migrate your existing media library to the cloud, not just new uploads.
 * **Built for WooCommerce:** Offload product images and protect digital downloads with time-limited Signed URLs.
 * **One-click setup:** Connect to 10+ cloud providers in seconds without touching `wp-config.php`.
+
 ## Free vs. PRO
 
 The Free version gives you everything you need to offload new media to any of our 10 supported cloud providers, including background sync and URL rewriting.
@@ -23,7 +24,7 @@ The Free version gives you everything you need to offload new media to any of ou
 *   **High-Speed Concurrency:** Up to 20 parallel background uploads, which cuts bulk migration times significantly.
 *   **Secure Digital Downloads:** Protect your WooCommerce or Easy Digital Downloads (EDD) products with time-limited Signed URLs.
 *   **Static Asset Offloading:** Speed up your entire site by moving your theme's CSS and JS files to the cloud.
-*   **Integrations:** Works with image optimizers (ShortPixel, Imagify), cache plugins (WP Rocket), and page builders (Elementor).
+*   **Integrations:** Works with image optimizers (ShortPixel, Imagify), cache plugins (WP Rocket), page builders (Elementor), and community plugins (BuddyBoss, BuddyPress).
 
 ## How to Use These Docs
 

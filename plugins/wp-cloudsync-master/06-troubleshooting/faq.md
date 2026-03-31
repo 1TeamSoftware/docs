@@ -24,7 +24,7 @@ Yes, easily. Your media library stays intact. You can add multiple provider acco
 
 ### Does this work with page builders like Elementor?
 
-Yes. The Free version handles standard WordPress content. **CloudSync Master PRO** adds specific integrations for **Elementor** and **Advanced Custom Fields (ACF)** that rewrite background images and custom field URLs to serve from your cloud bucket.
+Yes. The Free version handles standard WordPress content. **CloudSync Master PRO** adds specific integrations for **Elementor**, **Advanced Custom Fields (ACF)**, **BuddyBoss**, and **BuddyPress** that rewrite background images, custom field URLs, avatars, and cover images to serve from your cloud bucket.
 
 ---
 *[CloudSync Master PRO](https://1teamsoftware.com/product/wp-cloudsync-master-pro/) includes unlimited offloading, 10 providers, and no per-item limits.*

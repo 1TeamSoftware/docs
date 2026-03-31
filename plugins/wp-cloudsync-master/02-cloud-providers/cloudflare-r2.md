@@ -44,18 +44,20 @@ Quick Setup is the fastest way to connect. It walks you through the entire proce
 
 ### Step 2: Choose or Create a Bucket
 
-Once connected, CloudSync Master will load your R2 buckets automatically. For new buckets, the `r2.dev` public development URL will be pre-filled. If you already have a bucket with a custom public URL configured, it will be preloaded automatically.
+Once connected, CloudSync Master will load your R2 buckets automatically.
 
 ![Choose or Create Bucket](../assets/images/cloudflare-r2-choose-or-create-bucket.webp)
 
 1. In the **Bucket** dropdown, select an existing bucket or type a new name to create one.
 
-2. Enter a **Public URL** (This is **required**):
-   * CloudSync Master needs a public-facing URL to construct links for your media files.
-   * See the **"Setting Up a Public URL (Required)"** section at the bottom of this page for detailed instructions on getting either an `r2.dev` URL or configuring a custom domain.
-   * Copy the public URL and paste it into the **Public URL** field.
+2. The **Public URL** will be **auto-detected**:
+   * If you have a **custom domain** configured in Cloudflare (e.g., `cdn.yourdomain.com`), it will be detected and used automatically.
+   * If no custom domain is found, the `r2.dev` public development URL will be used as a fallback.
+   * You can also enter a URL manually — just type or paste a domain (e.g., `cdn.yourdomain.com`), and `https://` will be added automatically if omitted.
 
-3. Click **Test Connection**, then **Save**.
+3. Click **Test Connection**. If the bucket doesn't have public access enabled, you'll see a **"Fix Permissions"** button that enables it automatically.
+
+4. Click **Save**.
 
 > [!TIP]
 > We strongly recommend connecting a custom domain instead of using the default `*.r2.dev` URL. A custom domain activates Cloudflare's full CDN, giving you global edge caching and much faster load times.
