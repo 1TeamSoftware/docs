@@ -3,7 +3,9 @@
 
 All 1TeamSoftware WooCommerce shipping plugins — including [Shippo](https://1teamsoftware.com/product/wc-shippo-shipping-pro/), [EasyPost](https://1teamsoftware.com/product/wc-easypost-shipping-pro/), [FedEx](https://1teamsoftware.com/product/wc-fedex-shipping-pro/), [UPS](https://1teamsoftware.com/product/wc-ups-shipping-pro/), [ShipStation](https://1teamsoftware.com/product/wc-shipstation-shipping-pro/), [ShipEngine](https://1teamsoftware.com/product/wc-shipengine-shipping-pro/), [Shipmondo](https://1teamsoftware.com/product/wc-shipmondo-shipping-pro/), [ChitChats](https://1teamsoftware.com/product/wc-chitchats-shipping-pro/), and [Stallion Express](https://1teamsoftware.com/product/wc-stallionexpress-shipping-pro/) — support pre-configuring settings via PHP constants in `wp-config.php`.
 
-This is a **PRO-only feature** designed for:
+> **Note:** The free editions of these plugins use a different settings architecture. The `wp-config.php` constants and lockdown behavior described in this guide apply to the **PRO** versions and may not work on the free editions.
+
+This is designed for:
 
 - **Managed hosting** — agencies deploying the same configuration across multiple client sites
 - **Security** — keeping API keys and license keys out of the WordPress database and admin UI
@@ -97,7 +99,7 @@ define('ONETEAMSOFTWARE_WC_SHIPPO_SHIPPING_SETTINGS', [
 ]);
 ```
 
-**UI behavior:** Each overridden field is shown as disabled (grayed out) with a notice: *"This setting is configured via wp-config.php and cannot be changed here."* Credential fields (API keys, tokens — any field with `type: password`) are completely hidden from the admin UI when they appear in `_SETTINGS`.
+**UI behavior:** A banner titled **"Some Settings Managed Externally"** appears above the form (*"Some settings are configured via wp-config.php and are shown as read-only."*). Each overridden field is shown as disabled (grayed out) with a notice: *"This setting is configured via wp-config.php and cannot be changed here."* Credential fields (API keys, tokens — any field with `type: password`) are completely hidden from the admin UI when they appear in `_SETTINGS`.
 
 ### `_LICENSE_KEY` — Set the License Key
 
@@ -115,9 +117,9 @@ Makes **all** settings fields read-only. The settings page is still visible so a
 define('ONETEAMSOFTWARE_WC_SHIPPO_SHIPPING_DISABLE_SETTINGS', true);
 ```
 
-Accepts truthy values: `true`, `1`, `'true'`, `'yes'`.
+Accepts truthy values: `true`, `1`, `'1'`, `'true'`, `'yes'`, `'on'`.
 
-**UI behavior:** All fields are disabled (grayed out). A notice at the top reads: *"All settings are managed externally. This plugin's configuration is locked and cannot be changed here."* Credential fields that are externally configured are still hidden (not just disabled).
+**UI behavior:** All fields are disabled (grayed out). A notice at the top, titled **"All Settings Locked"**, reads: *"All settings are managed via wp-config.php. This plugin's configuration is locked and cannot be changed here."* Credential fields that are externally configured are still hidden (not just disabled).
 
 ### `_HIDE_SETTINGS` — Hide the Settings Page Entirely
 
@@ -127,9 +129,9 @@ The maximum lockdown level. The settings page shows only a notice — no fields,
 define('ONETEAMSOFTWARE_WC_SHIPPO_SHIPPING_HIDE_SETTINGS', true);
 ```
 
-Accepts truthy values: `true`, `1`, `'true'`, `'yes'`.
+Accepts truthy values: `true`, `1`, `'1'`, `'true'`, `'yes'`, `'on'`.
 
-**UI behavior:** The entire form is replaced with: *"This plugin is fully managed via server configuration. Settings cannot be viewed or changed here."*
+**UI behavior:** The entire form is replaced with a notice titled **"Settings Managed Externally"**: *"This plugin is fully managed via wp-config.php. Settings cannot be viewed or changed here."* Like `_DISABLE_SETTINGS`, it also blocks all saves.
 
 ---
 
@@ -324,6 +326,8 @@ These fields vary by carrier. All credential fields use `type: password` and are
 | `apiSecret` | API Secret | password |
 | `partner` | Partner Code | text |
 
+> The newer ShipStation API v2 entry point (namespace `wc-shipstation-shipping-v2`) uses only `apiKey`.
+
 #### ShipEngine
 
 | Field ID | Label | Type |
@@ -340,6 +344,7 @@ These fields vary by carrier. All credential fields use `type: password` and are
 | `accessToken` | Access Token | password |
 | `testClientId` | Test Client ID | password |
 | `testAccessToken` | Test Access Token | password |
+| `sandbox` | Sandbox Mode | checkbox (`yes`/`no`) |
 
 #### Stallion Express
 
@@ -715,7 +720,7 @@ wp option get woocommerce_wc-shippo-shipping_settings --format=json | python3 -m
 
 ## Related Plugins
 
-Server-level configuration via `wp-config.php` is a **PRO-only feature** available in all 1TeamSoftware WooCommerce shipping plugins:
+Server-level configuration via `wp-config.php` is available in the PRO versions of all 1TeamSoftware WooCommerce shipping plugins:
 
 | Plugin | Carrier / Platform | Free Version |
 |--------|-------------------|-------------|
@@ -731,6 +736,6 @@ Server-level configuration via `wp-config.php` is a **PRO-only feature** availab
 
 ---
 
-*Server-level configuration via `wp-config.php` is a PRO-only feature available across all 1TeamSoftware WooCommerce shipping plugins. [Upgrade to PRO](https://1teamsoftware.com/product-category/woocommerce-plugins/) to manage credentials, lock settings, and deploy at scale.*
+*Server-level configuration via `wp-config.php` is available in the PRO versions of all 1TeamSoftware WooCommerce shipping plugins. [Explore the PRO versions](https://1teamsoftware.com/product-category/woocommerce-plugins/) for label purchase, tracking, manifests, and lifecycle hooks too.*
 
 [🏠 Home](../README.md) | [◀ Plugin Hook Prefixes](hooks-by-plugin.md)

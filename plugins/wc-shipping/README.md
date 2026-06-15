@@ -30,11 +30,13 @@ This documentation covers all 1TeamSoftware WooCommerce multi-carrier shipping p
 | 03 — Features | Planned | Rate calculation, address validation, multi-vendor |
 | 04 — Shipping Labels | Planned | Label creation, bulk printing, manifests |
 | 05 — Troubleshooting | Planned | Common issues, debugging, logs |
-| [06 — Developer Guide](06-developer-guide/) | Available | Hooks API, plugin prefixes, customization |
+| [06 — Developer Guide](06-developer-guide/) | Available | WP-CLI, AI skills, Hooks API, plugin prefixes, customization |
 | [Carriers](carriers/) | Planned | Per-carrier setup guides |
 
 ## Developer Guide (Available Now)
 
+- [WP-CLI Commands](06-developer-guide/wp-cli.md) — Full command-line reference: status, settings, rates, products, boxes, labels, tracking, manifests, license
+- [AI Agent Skills](06-developer-guide/ai-skills.md) — Set up and troubleshoot the plugin with Claude Code, Cursor, or Copilot using the bundled skills
 - [Hooks API Reference](06-developer-guide/hooks-api.md) — 22 public hooks for customizing shipping rates, labels, tracking, and more
 - [Plugin Hook Prefixes](06-developer-guide/hooks-by-plugin.md) — Hook prefix mapping for all supported plugins, cross-plugin code patterns
 - [Server-Level Configuration](06-developer-guide/wp-config.md) — Pre-configure settings via wp-config.php constants or environment variables (PRO)

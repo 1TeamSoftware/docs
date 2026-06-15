@@ -11,13 +11,15 @@ All 1TeamSoftware WooCommerce shipping plugins share the same [Hooks API](hooks-
 | [EasyPost Shipping](https://1teamsoftware.com/product/wc-easypost-shipping-pro/) | `wc_easypost_shipping` | `wc_easypost_shipping_getServices` |
 | [FedEx Shipping](https://1teamsoftware.com/product/wc-fedex-shipping-pro/) | `wc_fedex_shipping` | `wc_fedex_shipping_getServices` |
 | [UPS Shipping](https://1teamsoftware.com/product/wc-ups-shipping-pro/) | `wc_ups_shipping` | `wc_ups_shipping_getServices` |
-| [ShipStation Shipping](https://1teamsoftware.com/product/wc-shipstation-shipping-pro/) | `wc_shipstation_shipping` | `wc_shipstation_shipping_getServices` |
+| [ShipStation Shipping](https://1teamsoftware.com/product/wc-shipstation-shipping-pro/) | `wc_shipstation_shipping_v2` | `wc_shipstation_shipping_v2_getServices` |
 | [ShipEngine Shipping](https://1teamsoftware.com/product/wc-shipengine-shipping-pro/) | `wc_shipengine_shipping` | `wc_shipengine_shipping_getServices` |
 | [Shipmondo Shipping](https://1teamsoftware.com/product/wc-shipmondo-shipping-pro/) | `wc_shipmondo_shipping` | `wc_shipmondo_shipping_getServices` |
 | [ChitChats Shipping](https://1teamsoftware.com/product/wc-chitchats-shipping-pro/) | `wc_chitchats_shipping` | `wc_chitchats_shipping_getServices` |
 | [Stallion Express Shipping](https://1teamsoftware.com/product/wc-stallionexpress-shipping-pro/) | `wc_stallionexpress_shipping` | `wc_stallionexpress_shipping_getServices` |
 
 > **Finding your prefix:** The prefix matches the plugin's text domain with hyphens replaced by underscores. For example, `wc-shippo-shipping` becomes `wc_shippo_shipping`.
+
+> **ShipStation note:** The current ShipStation plugin is API v2 and uses the prefix `wc_shipstation_shipping_v2`. The legacy/free ShipStation plugin uses `wc_shipstation_shipping`.
 
 ## How to Write Cross-Plugin Hook Code
 
@@ -64,6 +66,7 @@ function get_1ts_shipping_prefixes(): array {
         'wc-fedex-shipping-pro/wc-fedex-shipping-pro.php'     => 'wc_fedex_shipping',
         'wc-ups-shipping-pro/wc-ups-shipping-pro.php'         => 'wc_ups_shipping',
         'wc-shipstation-shipping-pro/wc-shipstation-shipping-pro.php' => 'wc_shipstation_shipping',
+        'wc-shipstation-shipping-pro/wc-shipstation-shipping-v2-pro.php' => 'wc_shipstation_shipping_v2',
         'wc-shipengine-shipping-pro/wc-shipengine-shipping-pro.php' => 'wc_shipengine_shipping',
         'wc-shipmondo-shipping-pro/wc-shipmondo-shipping-pro.php' => 'wc_shipmondo_shipping',
         'wc-chitchats-shipping-pro/wc-chitchats-shipping-pro.php' => 'wc_chitchats_shipping',

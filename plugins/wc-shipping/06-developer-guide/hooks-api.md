@@ -516,7 +516,7 @@ Control how many tracking history entries are stored per shipment. Higher values
 
 ```php
 add_filter('wc_shippo_shipping_max_tracking_events', function (int $max): int {
-    return 50; // Default is typically 10-20
+    return 50; // Default is 20
 });
 ```
 
@@ -707,7 +707,7 @@ These hooks work across all 1TeamSoftware WooCommerce shipping plugins. Each plu
 | [EasyPost Shipping PRO](https://1teamsoftware.com/product/wc-easypost-shipping-pro/) | EasyPost (100+ carriers) | `wc_easypost_shipping` |
 | [FedEx Shipping PRO](https://1teamsoftware.com/product/wc-fedex-shipping-pro/) | FedEx | `wc_fedex_shipping` |
 | [UPS Shipping PRO](https://1teamsoftware.com/product/wc-ups-shipping-pro/) | UPS | `wc_ups_shipping` |
-| [ShipStation Shipping PRO](https://1teamsoftware.com/product/wc-shipstation-shipping-pro/) | ShipStation | `wc_shipstation_shipping` |
+| [ShipStation Shipping PRO](https://1teamsoftware.com/product/wc-shipstation-shipping-pro/) | ShipStation | `wc_shipstation_shipping_v2` (legacy free: `wc_shipstation_shipping`) |
 | [ShipEngine Shipping PRO](https://1teamsoftware.com/product/wc-shipengine-shipping-pro/) | ShipEngine | `wc_shipengine_shipping` |
 | [Shipmondo Shipping PRO](https://1teamsoftware.com/product/wc-shipmondo-shipping-pro/) | Shipmondo | `wc_shipmondo_shipping` |
 | [ChitChats Shipping PRO](https://1teamsoftware.com/product/wc-chitchats-shipping-pro/) | ChitChats | `wc_chitchats_shipping` |
