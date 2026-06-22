@@ -105,6 +105,11 @@ wp cloudsync objects reupload --file-path=wp-content/uploads/2023/image.jpg
 
 # Request a re-upload of all recorded objects for a given account
 wp cloudsync objects reupload --account=<id> --all
+```
+
+> **Note:** When `enableBackgroundOffload` is disabled, `objects reupload` warns and does nothing: `Warning: Background offload is disabled. Re-enable it in Settings to use this command.`
+
+```bash
 
 # Wipe out the tracking record of a specific local file
 wp cloudsync objects delete --file-path=wp-content/uploads/2023/image.jpg
@@ -130,6 +135,18 @@ wp cloudsync settings get uploadBatchSize
 # Update a setting's value programmatically
 wp cloudsync settings set uploadConcurrency 5
 wp cloudsync settings set deleteFromLocalServer yes
+
+# Last-resort fallback: offload files that are missing on disk by fetching
+# them from their public URL (with a per-file timeout, 5-300s, default 30)
+wp cloudsync settings set fetchMissingFilesFromUrl yes
+wp cloudsync settings set fetchTimeoutSeconds 30
+
+# Pause background offload (keep cloud account connected, direct upload unaffected)
+# enableBackgroundOffload (bool, default yes): master switch for background
+# media offload — library scan, fill queue, re-upload. Direct upload is owned
+# by createObjectOnFileUpload. Defaults to on.
+$ wp cloudsync settings set enableBackgroundOffload no
+Success: enableBackgroundOffload set to no.
 
 # Reset a setting to its default out-of-the-box value
 wp cloudsync settings reset uploadBatchSize

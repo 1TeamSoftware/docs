@@ -28,6 +28,26 @@ These master switches dictate the plugin's primary behavior:
 * **How it works:** The plugin dynamically filters content as it is rendered to the visitor. If an image is stored on your local server, it leaves the URL alone. If the database indicates the image was offloaded to the cloud, it swaps `https://yourdomain.com/wp-content/...` with `https://cdn.yourdomain.com/...` on the fly.
 * **Recommendation:** Keep this **ON** unless you are temporarily troubleshooting or have another CDN plugin handling rewriting.
 
+### Fetch Missing Files From URL (PRO)
+* **What it does:** A last-resort offloading fallback. When the plugin tries to offload a media file but cannot find the original on disk, it downloads the file from its public URL and uploads that copy to the cloud instead.
+* **How it works:** Normally the plugin reads the file straight from `wp-content/uploads`. On some managed hosts the original isn't directly accessible on disk (custom storage layouts, externalized media, or files that were already removed locally), so the upload would otherwise be skipped. With this enabled, the plugin requests the file's own public URL, validates the downloaded content, offloads it to the cloud, and discards the temporary copy. A short-lived marker prevents it from repeatedly retrying files that are genuinely gone.
+* **Remote Fetch Timeout:** The companion **Remote Fetch Timeout** field caps how long (in seconds, 5-300, default 30) the plugin will spend downloading each missing file before giving up.
+* **Why use it:** It lets offloading "just work" on hosting setups where local files aren't readable, without manual intervention. Leave it **OFF** unless you have files that exist publicly but can't be found on disk.
+
+### Enable Background Offload (PRO)
+* **What it does:** A master switch (found under **Settings → Upload Behavior**) that controls whether WP CloudSync Master performs **background** media offload — the library scan, the **Fill Upload Queue** action, and bulk **Reupload** operations. Defaults to **ON**.
+* **How it works:** With the toggle ON, the plugin behaves normally — new media from the library scan and re-upload requests are queued and pushed to the cloud in the background. With it OFF, those background pathways are paused: the **Fill Upload Queue** button is disabled with an on-screen notice, the bulk **Reupload** action is hidden from the Media Library, and `wp cloudsync objects reupload` emits a warning and does nothing. CSS/JS asset offload is not affected.
+* **Independent from Direct File Upload:** This setting does **not** touch **Upload to Cloud** (`createObjectOnFileUpload`). Direct uploads made at media-add time continue to flow to the cloud as configured — only the *background* offload pathways (scan, fill queue, re-upload) are paused. The cloud account itself stays connected, so already-offloaded files keep being served via URL rewriting.
+* **Why use it:** Use it to temporarily pause a large backfill or migration without disconnecting your cloud account, or to freeze background activity during maintenance while keeping direct uploads live.
+* **CLI override:**
+  ```bash
+  # Pause background offload (cloud account stays connected; direct upload unaffected)
+  wp cloudsync settings set enableBackgroundOffload no
+
+  # Re-enable
+  wp cloudsync settings set enableBackgroundOffload yes
+  ```
+
 ## The Media Library Integration
 
 Once you have configured the settings, you can head over to your WordPress **Media Library** to see WP CloudSync Master in action.

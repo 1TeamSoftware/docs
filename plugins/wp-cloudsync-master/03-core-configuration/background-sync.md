@@ -4,6 +4,9 @@ When you upload a large number of images to WordPress, WP CloudSync Master proce
 
 The plugin uses REST APIs to asynchronously validate and push items to the cloud. You can leave the page and it will keep working.
 
+> [!NOTE]
+> Need to pause background sync temporarily? Toggle the **Enable Background Offload** setting under **Settings → Upload Behavior** (PRO). When disabled, the **Fill Upload Queue** action is halted without disconnecting your cloud account — already-offloaded files keep being served, and direct uploads (via *Upload to Cloud*) are unaffected. See [General Settings](general-settings.md#enable-background-offload-pro) for details.
+
 ## Real-Time Visibility
 
 Unlike other plugins that process uploads invisibly as a "black box," CloudSync Master gives you complete transparency.

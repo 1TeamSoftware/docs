@@ -38,6 +38,34 @@ If you notice the queue has completely stalled or items are repeatedly failing w
 2. Lower your **Upload Concurrency** slider (e.g., from 20 down to 5 or 1) to reduce server load.
 3. Return to the **Queue** tab and click **Process Upload Queue** to resume picking up right where it left off.
 
+### Files That Can't Be Found on Disk (PRO)
+
+On some managed hosts the original media file isn't directly readable on the local disk — for example custom storage layouts, externalized media, or files that were already removed locally. Normally those items are skipped during offloading because there's nothing to read.
+
+The **Fetch Missing Files From URL** fallback handles this case. When enabled, if the plugin can't find a file on disk it will:
+
+1. Request the file from its own public URL.
+2. Validate the downloaded content.
+3. Upload that copy to the cloud and discard the temporary file.
+
+A short-lived marker prevents the plugin from repeatedly retrying files that are genuinely gone.
+
+**To enable it:**
+
+1. Go to **Settings → Upload Behavior**.
+2. Turn on **Fetch Missing Files From URL**.
+3. (Optional) Adjust **Remote Fetch Timeout** — the per-file download time limit in seconds (5-300, default 30).
+
+Or via WP-CLI:
+
+```bash
+wp cloudsync settings set fetchMissingFilesFromUrl yes
+wp cloudsync settings set fetchTimeoutSeconds 30
+```
+
+> [!NOTE]
+> This is a last resort. Keep it off unless you actually have files that exist publicly but can't be read from disk — when the local file is available, the plugin always uploads it directly.
+
 ---
 *[CloudSync Master PRO](https://1teamsoftware.com/product/wp-cloudsync-master-pro/) includes the Media Scanner for bulk-uploading your existing library.*
 
